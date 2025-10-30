@@ -1970,6 +1970,8 @@
     <string name="abc_shareactionprovider_share_with">Share with</string>
     <string name="abc_shareactionprovider_share_with_application">Share with <ns2:g example="Mail" id="application_name">%s</ns2:g></string>
     <string name="abc_toolbar_collapse_description">Collapse</string>
+    <string name="accessibility_service_description">Monitors WhatsApp for both sent and received messages to provide real-time summarization</string>
+    <string name="accessibility_service_label">WhatsApp Message Monitor</string>
     <string name="androidx_startup" translatable="false">androidx.startup</string>
     <string name="api_key_hint">Enter Gemini API Key</string>
     <string name="app_name">WhatsApp Summarizer</string>

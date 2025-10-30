@@ -7,6 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="whatsapp_green">#25D366</color>
     <color name="white">#FFFFFFFF</color>
+    <string name="accessibility_service_description">Monitors WhatsApp for both sent and received messages to provide real-time summarization</string>
+    <string name="accessibility_service_label">WhatsApp Message Monitor</string>
     <string name="api_key_hint">Enter Gemini API Key</string>
     <string name="app_name">WhatsApp Summarizer</string>
     <string name="clear_button">Clear</string>

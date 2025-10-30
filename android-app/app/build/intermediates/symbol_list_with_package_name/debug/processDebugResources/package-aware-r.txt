@@ -3527,6 +3527,8 @@ id submenuarrow
 id submit_area
 id summarizeBtn
 id summarizeButton
+id summaryDetailText
+id summaryHeaderView
 id summaryText
 id summaryView
 id supportScrollUp
@@ -3822,6 +3824,8 @@ string abc_searchview_description_voice
 string abc_shareactionprovider_share_with
 string abc_shareactionprovider_share_with_application
 string abc_toolbar_collapse_description
+string accessibility_service_description
+string accessibility_service_label
 string androidx_startup
 string api_key_hint
 string app_name
@@ -5245,3 +5249,4 @@ styleable ViewPager2 android_orientation
 styleable ViewStubCompat android_id android_layout android_inflatedId
 styleable ViewTransition android_id SharedValue SharedValueId clearsTag duration ifTagNotSet ifTagSet motionInterpolator motionTarget onStateTransition pathMotionArc setsTag transitionDisable upDuration viewTransitionMode
 styleable include constraintSet
+xml accessibility_service_config

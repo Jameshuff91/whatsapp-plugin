@@ -27,10 +27,14 @@ id overlayToggle
 id saveApiKeyButton
 id summarizeBtn
 id summarizeButton
+id summaryDetailText
+id summaryHeaderView
 id summaryText
 id summaryView
 layout activity_main
 layout floating_window
+string accessibility_service_description
+string accessibility_service_label
 string api_key_hint
 string app_name
 string clear_button
@@ -46,3 +50,4 @@ string summarize_button
 string summary_label
 string whatsapp_listener_title
 style Theme.WhatsAppSummarizer
+xml accessibility_service_config

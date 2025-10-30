@@ -13,4 +13,6 @@
     <string name="permission_required">This app requires notification listener permission. Please enable it in settings.</string>
     <string name="enable_listener">Enable Listener</string>
     <string name="overlay_enabled">Floating overlay is enabled. Look for the + button on your screen.</string>
+    <string name="accessibility_service_label">WhatsApp Message Monitor</string>
+    <string name="accessibility_service_description">Monitors WhatsApp for both sent and received messages to provide real-time summarization</string>
 </resources>

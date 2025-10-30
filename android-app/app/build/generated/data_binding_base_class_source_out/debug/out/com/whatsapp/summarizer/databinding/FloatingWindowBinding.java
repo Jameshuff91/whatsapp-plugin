@@ -44,12 +44,19 @@ public final class FloatingWindowBinding implements ViewBinding {
   public final Button summarizeBtn;
 
   @NonNull
+  public final TextView summaryDetailText;
+
+  @NonNull
+  public final LinearLayout summaryHeaderView;
+
+  @NonNull
   public final TextView summaryText;
 
   private FloatingWindowBinding(@NonNull FrameLayout rootView, @NonNull Button clearBtn,
       @NonNull Button closeBtn, @NonNull LinearLayout expandedView, @NonNull Button floatingButton,
       @NonNull ProgressBar loadingProgress, @NonNull TextView messagesText,
-      @NonNull Button summarizeBtn, @NonNull TextView summaryText) {
+      @NonNull Button summarizeBtn, @NonNull TextView summaryDetailText,
+      @NonNull LinearLayout summaryHeaderView, @NonNull TextView summaryText) {
     this.rootView = rootView;
     this.clearBtn = clearBtn;
     this.closeBtn = closeBtn;
@@ -58,6 +65,8 @@ public final class FloatingWindowBinding implements ViewBinding {
     this.loadingProgress = loadingProgress;
     this.messagesText = messagesText;
     this.summarizeBtn = summarizeBtn;
+    this.summaryDetailText = summaryDetailText;
+    this.summaryHeaderView = summaryHeaderView;
     this.summaryText = summaryText;
   }
 
@@ -130,6 +139,18 @@ public final class FloatingWindowBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.summaryDetailText;
+      TextView summaryDetailText = ViewBindings.findChildViewById(rootView, id);
+      if (summaryDetailText == null) {
+        break missingId;
+      }
+
+      id = R.id.summaryHeaderView;
+      LinearLayout summaryHeaderView = ViewBindings.findChildViewById(rootView, id);
+      if (summaryHeaderView == null) {
+        break missingId;
+      }
+
       id = R.id.summaryText;
       TextView summaryText = ViewBindings.findChildViewById(rootView, id);
       if (summaryText == null) {
@@ -137,7 +158,8 @@ public final class FloatingWindowBinding implements ViewBinding {
       }
 
       return new FloatingWindowBinding((FrameLayout) rootView, clearBtn, closeBtn, expandedView,
-          floatingButton, loadingProgress, messagesText, summarizeBtn, summaryText);
+          floatingButton, loadingProgress, messagesText, summarizeBtn, summaryDetailText,
+          summaryHeaderView, summaryText);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

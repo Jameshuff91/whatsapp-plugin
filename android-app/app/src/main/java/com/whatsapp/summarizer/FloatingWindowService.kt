@@ -37,12 +37,8 @@ class FloatingWindowService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (floatingView == null) {
-            // Only create the floating window if we have the permission
-            if (hasWindowPermission()) {
-                createFloatingWindow()
-            } else {
-                Log.w("FloatingWindowService", "SYSTEM_ALERT_WINDOW permission not granted yet")
-            }
+            // Create the floating window - let the system handle permission errors
+            createFloatingWindow()
         }
         return START_STICKY
     }
@@ -61,15 +57,20 @@ class FloatingWindowService : Service() {
                 }
                 format = PixelFormat.TRANSLUCENT
                 flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-                width = 100
-                height = 100
-                gravity = Gravity.TOP or Gravity.END
+
+                // Get display metrics for proper sizing
+                val displayMetrics = resources.displayMetrics
+                width = displayMetrics.widthPixels  // Full screen width
+                height = 150  // Approximate height for header (will wrap to content)
+
+                gravity = Gravity.TOP
                 x = 0
-                y = 100
+                y = 0
             }
 
             windowManager?.addView(floatingView, params)
             setupFloatingViewListeners()
+            Log.i("FloatingWindow", "Floating window created successfully at position (0,0) with size ${params.width}x${params.height}")
         } catch (e: Exception) {
             Log.e("FloatingWindow", "Failed to create floating window: ${e.message}", e)
             // Window couldn't be added - likely permission not granted
@@ -80,6 +81,7 @@ class FloatingWindowService : Service() {
         val floatingButton = floatingView?.findViewById<Button>(R.id.floatingButton) ?: return
         val expandedView = floatingView?.findViewById<View>(R.id.expandedView) ?: return
         val summaryText = floatingView?.findViewById<TextView>(R.id.summaryText) ?: return
+        val summaryDetailText = floatingView?.findViewById<TextView>(R.id.summaryDetailText)
         val messagesText = floatingView?.findViewById<TextView>(R.id.messagesText) ?: return
         val summarizeBtn = floatingView?.findViewById<Button>(R.id.summarizeBtn) ?: return
         val clearBtn = floatingView?.findViewById<Button>(R.id.clearBtn) ?: return
@@ -88,22 +90,27 @@ class FloatingWindowService : Service() {
 
         var isExpanded = false
 
-        // Toggle expand/collapse
+        // Keep header always visible - start updating messages immediately
+        scope.launch {
+            messageQueue.getMessagesFlow().collect { messages ->
+                val headerText = if (messages.isEmpty()) {
+                    "Waiting for messages..."
+                } else {
+                    messages.take(3).joinToString("\n") { "${it.sender}: ${it.text.take(40)}..." }
+                }
+                summaryText.text = headerText
+            }
+        }
+
+        // Toggle expand/collapse for detailed view
         floatingButton.setOnClickListener {
             isExpanded = !isExpanded
             expandedView.visibility = if (isExpanded) View.VISIBLE else View.GONE
-            floatingButton.text = if (isExpanded) "−" else "+"
+            floatingButton.text = if (isExpanded) "×" else "−"
 
-            // Dynamically resize window
             if (isExpanded) {
-                params.width = 360  // 320dp + padding
-                params.height = 550  // Enough for all content
                 updateMessages(messagesText)
-            } else {
-                params.width = 100
-                params.height = 100
             }
-            windowManager?.updateViewLayout(floatingView, params)
         }
 
         // Summarize button
@@ -111,24 +118,26 @@ class FloatingWindowService : Service() {
             scope.launch {
                 val messages = messageQueue.getMessages()
                 if (messages.isEmpty()) {
-                    summaryText.text = "No messages to summarize"
+                    summaryDetailText?.text = "No messages to summarize"
                     return@launch
                 }
 
                 val apiKey = geminiService.getApiKey()
                 if (apiKey.isEmpty()) {
-                    summaryText.text = "API key not configured. Set GEMINI_API_KEY at build time."
+                    summaryDetailText?.text = "API key not configured. Set GEMINI_API_KEY at build time."
                     return@launch
                 }
 
                 loadingProgress.visibility = View.VISIBLE
-                summaryText.text = "Generating summary..."
+                summaryDetailText?.text = "Generating summary..."
 
                 try {
                     val summary = geminiService.summarizeMessages(messages, apiKey)
-                    summaryText.text = summary
+                    summaryDetailText?.text = summary
+                    // Also update header with summary
+                    summaryText.text = summary.take(100) + if (summary.length > 100) "..." else ""
                 } catch (e: Exception) {
-                    summaryText.text = "Error: ${e.message}"
+                    summaryDetailText?.text = "Error: ${e.message}"
                 } finally {
                     loadingProgress.visibility = View.GONE
                 }
@@ -139,7 +148,8 @@ class FloatingWindowService : Service() {
         clearBtn.setOnClickListener {
             scope.launch {
                 messageQueue.clearMessages()
-                summaryText.text = ""
+                summaryDetailText?.text = ""
+                summaryText.text = "Waiting for messages..."
                 messagesText.text = "No messages"
             }
         }
@@ -148,49 +158,7 @@ class FloatingWindowService : Service() {
         closeBtn.setOnClickListener {
             isExpanded = false
             expandedView.visibility = View.GONE
-            floatingButton.text = "+"
-            params.width = 100
-            params.height = 100
-            windowManager?.updateViewLayout(floatingView, params)
-        }
-
-        // Make floating button draggable
-        var lastAction = 0
-        var initialX = 0
-        var initialY = 0
-        var initialTouchX = 0f
-        var initialTouchY = 0f
-
-        floatingButton.setOnTouchListener { _, event ->
-            when (event.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    lastAction = 0
-                    initialX = params.x
-                    initialY = params.y
-                    initialTouchX = event.rawX
-                    initialTouchY = event.rawY
-                    true
-                }
-                MotionEvent.ACTION_MOVE -> {
-                    val deltaX = (event.rawX - initialTouchX).toInt()
-                    val deltaY = (event.rawY - initialTouchY).toInt()
-
-                    params.x = initialX + deltaX
-                    params.y = initialY + deltaY
-
-                    windowManager?.updateViewLayout(floatingView, params)
-                    lastAction = 1
-                    true
-                }
-                MotionEvent.ACTION_UP -> {
-                    if (lastAction == 0) {
-                        // It was a click
-                        floatingButton.performClick()
-                    }
-                    true
-                }
-                else -> false
-            }
+            floatingButton.text = "−"
         }
     }
 
