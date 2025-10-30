@@ -26,8 +26,15 @@ dist-ssr
 # Gradle build files
 android-app/.gradle/
 android-app/build/
+android-app/app/build/
 android-app/*.jks
 android-app/*.keystore
+android-app/local.properties
+android-app/.cxx/
+
+# Generated files - NEVER commit these!
+**/BuildConfig.java
+**/BuildConfig.class
 
 # Gradle wrapper (optional - some projects commit this)
 # android-app/gradle/wrapper/gradle-wrapper.jar
