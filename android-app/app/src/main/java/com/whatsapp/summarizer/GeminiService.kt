@@ -7,8 +7,10 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -72,7 +74,7 @@ class GeminiService(private val context: Context) {
             }
 
             Log.d("GeminiService", "Calling Gemini API with text: ${messageText.take(100)}...")
-            // Call Gemini API
+            // Call Gemini API on background thread
             val result = callGeminiApi(messageText, key)
             Log.d("GeminiService", "API result: $result")
             result
@@ -82,7 +84,7 @@ class GeminiService(private val context: Context) {
         }
     }
 
-    private fun callGeminiApi(text: String, apiKey: String): String {
+    private suspend fun callGeminiApi(text: String, apiKey: String): String {
         val prompt = """
             Please summarize the following WhatsApp messages concisely in 2-3 sentences:
 
@@ -111,7 +113,9 @@ class GeminiService(private val context: Context) {
 
         return try {
             Log.d("GeminiService", "Making API request to $GEMINI_API_URL")
-            val response = client.newCall(request).execute()
+            val response = withContext(Dispatchers.IO) {
+                client.newCall(request).execute()
+            }
 
             Log.d("GeminiService", "API response code: ${response.code}")
 
