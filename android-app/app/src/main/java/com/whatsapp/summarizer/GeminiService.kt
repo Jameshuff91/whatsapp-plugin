@@ -23,7 +23,7 @@ class GeminiService(private val context: Context) {
     private val client = OkHttpClient()
 
     companion object {
-        private const val GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
+        private const val GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent"
         private const val TIMEOUT_MS = 30000L
     }
 
