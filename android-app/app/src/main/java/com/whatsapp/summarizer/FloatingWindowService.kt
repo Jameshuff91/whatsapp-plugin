@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.PixelFormat
 import android.os.Build
 import android.os.IBinder
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -41,27 +42,32 @@ class FloatingWindowService : Service() {
     }
 
     private fun createFloatingWindow() {
-        val inflater = LayoutInflater.from(this)
-        floatingView = inflater.inflate(R.layout.floating_window, null)
+        try {
+            val inflater = LayoutInflater.from(this)
+            floatingView = inflater.inflate(R.layout.floating_window, null)
 
-        params = WindowManager.LayoutParams().apply {
-            type = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
-            } else {
-                @Suppress("DEPRECATION")
-                WindowManager.LayoutParams.TYPE_PHONE
+            params = WindowManager.LayoutParams().apply {
+                type = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+                } else {
+                    @Suppress("DEPRECATION")
+                    WindowManager.LayoutParams.TYPE_PHONE
+                }
+                format = PixelFormat.TRANSLUCENT
+                flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+                width = 100
+                height = 100
+                gravity = Gravity.TOP or Gravity.END
+                x = 0
+                y = 100
             }
-            format = PixelFormat.TRANSLUCENT
-            flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-            width = 100
-            height = 100
-            gravity = Gravity.TOP or Gravity.END
-            x = 0
-            y = 100
-        }
 
-        windowManager?.addView(floatingView, params)
-        setupFloatingViewListeners()
+            windowManager?.addView(floatingView, params)
+            setupFloatingViewListeners()
+        } catch (e: Exception) {
+            Log.e("FloatingWindow", "Failed to create floating window: ${e.message}", e)
+            // Window couldn't be added - likely permission not granted
+        }
     }
 
     private fun setupFloatingViewListeners() {

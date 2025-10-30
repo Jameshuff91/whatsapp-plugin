@@ -14,6 +14,8 @@ import android.widget.ProgressBar
 import android.widget.Switch
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 
@@ -28,6 +30,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var listenerStatus: TextView
     private lateinit var overlayToggle: Switch
 
+    companion object {
+        private const val PERMISSION_REQUEST_CODE = 123
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -38,6 +44,23 @@ class MainActivity : AppCompatActivity() {
         initializeViews()
         setupListeners()
         checkNotificationListenerPermission()
+        requestSystemAlertWindowPermission()
+    }
+
+    private fun requestSystemAlertWindowPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.SYSTEM_ALERT_WINDOW
+                ) != android.content.pm.PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(android.Manifest.permission.SYSTEM_ALERT_WINDOW),
+                    PERMISSION_REQUEST_CODE
+                )
+            }
+        }
     }
 
     private fun initializeViews() {
@@ -106,11 +129,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun startFloatingWindow() {
         val intent = Intent(this, FloatingWindowService::class.java)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(intent)
-        } else {
-            startService(intent)
-        }
+        startService(intent)
     }
 
     private fun stopFloatingWindow() {
