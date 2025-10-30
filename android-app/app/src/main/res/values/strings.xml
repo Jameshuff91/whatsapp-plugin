@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">WhatsApp Summarizer</string>
+    <string name="whatsapp_listener_title">WhatsApp Message Listener</string>
+    <string name="summarize_button">Summarize Unread Messages</string>
+    <string name="clear_button">Clear</string>
+    <string name="api_key_hint">Enter Gemini API Key</string>
+    <string name="save_button">Save API Key</string>
+    <string name="messages_label">Unread Messages:</string>
+    <string name="summary_label">Summary:</string>
+    <string name="loading">Generating summary...</string>
+    <string name="no_messages">No unread messages captured yet.</string>
+    <string name="error_no_key">Please set your Gemini API key first.</string>
+    <string name="permission_required">This app requires notification listener permission. Please enable it in settings.</string>
+    <string name="enable_listener">Enable Listener</string>
+    <string name="overlay_enabled">Floating overlay is enabled. Look for the + button on your screen.</string>
+</resources>
