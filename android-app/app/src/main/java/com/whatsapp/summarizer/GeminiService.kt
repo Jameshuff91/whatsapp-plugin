@@ -1,6 +1,7 @@
 package com.whatsapp.summarizer
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -52,8 +53,13 @@ class GeminiService(private val context: Context) {
             ?: if (BuildConfig.GEMINI_API_KEY.isNotEmpty()) BuildConfig.GEMINI_API_KEY
             else null
 
+        Log.d("GeminiService", "summarizeMessages called with ${messages.size} messages")
+        Log.d("GeminiService", "API key present: ${!key.isNullOrBlank()}")
+
         if (key.isNullOrBlank()) {
-            throw IllegalArgumentException("API key is required. Set GEMINI_API_KEY environment variable at build time or provide it manually.")
+            val error = "API key is required. Set GEMINI_API_KEY environment variable at build time or provide it manually."
+            Log.e("GeminiService", error)
+            throw IllegalArgumentException(error)
         }
 
         if (messages.isEmpty()) {
@@ -65,9 +71,13 @@ class GeminiService(private val context: Context) {
                 "${message.sender}: ${message.text}"
             }
 
+            Log.d("GeminiService", "Calling Gemini API with text: ${messageText.take(100)}...")
             // Call Gemini API
-            callGeminiApi(messageText, key)
+            val result = callGeminiApi(messageText, key)
+            Log.d("GeminiService", "API result: $result")
+            result
         } catch (e: Exception) {
+            Log.e("GeminiService", "Error in summarizeMessages", e)
             "Error: ${e.message}"
         }
     }
@@ -100,13 +110,20 @@ class GeminiService(private val context: Context) {
             .build()
 
         return try {
+            Log.d("GeminiService", "Making API request to $GEMINI_API_URL")
             val response = client.newCall(request).execute()
 
+            Log.d("GeminiService", "API response code: ${response.code}")
+
             if (!response.isSuccessful) {
-                return "Error: API returned ${response.code} - ${response.body?.string()}"
+                val errorBody = response.body?.string() ?: "Unknown error"
+                val error = "Error: API returned ${response.code} - $errorBody"
+                Log.e("GeminiService", error)
+                return error
             }
 
             val responseBody = response.body?.string() ?: return "Error: Empty response"
+            Log.d("GeminiService", "API response body: ${responseBody.take(500)}")
 
             // Parse JSON response
             val json = com.google.gson.JsonParser.parseString(responseBody).asJsonObject
@@ -118,13 +135,18 @@ class GeminiService(private val context: Context) {
                 val parts = content?.get("parts")?.asJsonArray
                 if (parts != null && parts.size() > 0) {
                     val summary = parts[0].asJsonObject.get("text")?.asString
+                    Log.d("GeminiService", "Extracted summary: $summary")
                     return summary ?: "No summary generated"
                 }
             }
 
-            "Error: Could not extract summary from response"
+            val error = "Error: Could not extract summary from response"
+            Log.e("GeminiService", error)
+            error
         } catch (e: Exception) {
-            "Error calling Gemini API: ${e.message}"
+            val error = "Error calling Gemini API: ${e.message}"
+            Log.e("GeminiService", error, e)
+            error
         }
     }
 }

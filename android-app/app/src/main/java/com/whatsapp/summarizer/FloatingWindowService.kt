@@ -18,6 +18,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class FloatingWindowService : Service() {
@@ -27,6 +28,7 @@ class FloatingWindowService : Service() {
     private lateinit var geminiService: GeminiService
     private val scope = CoroutineScope(Dispatchers.Main)
     private lateinit var params: WindowManager.LayoutParams
+    private var summarizeJob: kotlinx.coroutines.Job? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -90,15 +92,51 @@ class FloatingWindowService : Service() {
 
         var isExpanded = false
 
-        // Keep header always visible - start updating messages immediately
+        // Auto-summarize messages with debouncing
         scope.launch {
             messageQueue.getMessagesFlow().collect { messages ->
-                val headerText = if (messages.isEmpty()) {
-                    "Waiting for messages..."
-                } else {
-                    messages.take(3).joinToString("\n") { "${it.sender}: ${it.text.take(40)}..." }
+                if (messages.isEmpty()) {
+                    summaryText.text = "Waiting for messages..."
+                    return@collect
                 }
-                summaryText.text = headerText
+
+                Log.d("FloatingWindow", "Messages arrived, triggering debounced summarization. Count: ${messages.size}")
+
+                // Cancel previous summarization job
+                summarizeJob?.cancel()
+
+                // Launch new debounced summarization job
+                summarizeJob = scope.launch {
+                    try {
+                        // Wait 2 seconds to allow more messages to arrive (debounce)
+                        delay(2000)
+
+                        Log.d("FloatingWindow", "Starting auto-summarization of ${messages.size} messages")
+                        summaryText.text = "Generating summary..."
+                        loadingProgress.visibility = View.VISIBLE
+
+                        val apiKey = geminiService.getApiKey()
+                        if (apiKey.isEmpty()) {
+                            Log.w("FloatingWindow", "API key not available for auto-summarization")
+                            summaryText.text = "API key not configured"
+                            loadingProgress.visibility = View.GONE
+                            return@launch
+                        }
+
+                        // Call Gemini API to summarize
+                        val summary = geminiService.summarizeMessages(messages, apiKey)
+                        Log.d("FloatingWindow", "Auto-summarization complete: $summary")
+
+                        summaryText.text = summary
+                        summaryDetailText?.text = summary
+                    } catch (e: Exception) {
+                        Log.e("FloatingWindow", "Error in auto-summarization", e)
+                        summaryText.text = "Error: ${e.message}"
+                        summaryDetailText?.text = "Error: ${e.message}"
+                    } finally {
+                        loadingProgress.visibility = View.GONE
+                    }
+                }
             }
         }
 
