@@ -52,7 +52,7 @@ class FloatingWindowService : Service() {
                 WindowManager.LayoutParams.TYPE_PHONE
             }
             format = PixelFormat.TRANSLUCENT
-            flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+            flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
             width = 100
             height = 100
             gravity = Gravity.TOP or Gravity.END
@@ -82,9 +82,16 @@ class FloatingWindowService : Service() {
             expandedView.visibility = if (isExpanded) View.VISIBLE else View.GONE
             floatingButton.text = if (isExpanded) "−" else "+"
 
+            // Dynamically resize window
             if (isExpanded) {
+                params.width = 360  // 320dp + padding
+                params.height = 550  // Enough for all content
                 updateMessages(messagesText)
+            } else {
+                params.width = 100
+                params.height = 100
             }
+            windowManager?.updateViewLayout(floatingView, params)
         }
 
         // Summarize button
@@ -130,6 +137,9 @@ class FloatingWindowService : Service() {
             isExpanded = false
             expandedView.visibility = View.GONE
             floatingButton.text = "+"
+            params.width = 100
+            params.height = 100
+            windowManager?.updateViewLayout(floatingView, params)
         }
 
         // Make floating button draggable
