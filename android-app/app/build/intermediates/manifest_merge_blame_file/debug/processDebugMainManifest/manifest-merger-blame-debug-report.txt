@@ -1,0 +1,173 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.whatsapp.summarizer"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="24"
+9        android:targetSdkVersion="34" />
+10
+11    <!-- Required permissions -->
+12    <uses-permission android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE" />
+12-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:6:5-93
+12-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:6:22-90
+13    <uses-permission android:name="android.permission.INTERNET" />
+13-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:7:5-67
+13-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:7:22-64
+14    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+14-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:8:5-79
+14-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:8:22-76
+15    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+15-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:9:5-78
+15-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:9:22-75
+16
+17    <permission
+17-->[androidx.core:core:1.12.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/7fd00813e2022f0f31289fe0e045ff85/transformed/core-1.12.0/AndroidManifest.xml:22:5-24:47
+18        android:name="com.whatsapp.summarizer.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+18-->[androidx.core:core:1.12.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/7fd00813e2022f0f31289fe0e045ff85/transformed/core-1.12.0/AndroidManifest.xml:23:9-81
+19        android:protectionLevel="signature" />
+19-->[androidx.core:core:1.12.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/7fd00813e2022f0f31289fe0e045ff85/transformed/core-1.12.0/AndroidManifest.xml:24:9-44
+20
+21    <uses-permission android:name="com.whatsapp.summarizer.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+21-->[androidx.core:core:1.12.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/7fd00813e2022f0f31289fe0e045ff85/transformed/core-1.12.0/AndroidManifest.xml:26:5-97
+21-->[androidx.core:core:1.12.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/7fd00813e2022f0f31289fe0e045ff85/transformed/core-1.12.0/AndroidManifest.xml:26:22-94
+22
+23    <application
+23-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:11:5-48:19
+24        android:allowBackup="true"
+24-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:12:9-35
+25        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+25-->[androidx.core:core:1.12.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/7fd00813e2022f0f31289fe0e045ff85/transformed/core-1.12.0/AndroidManifest.xml:28:18-86
+26        android:debuggable="true"
+26-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:13:9-34
+27        android:extractNativeLibs="false"
+28        android:icon="@drawable/ic_launcher"
+28-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:14:9-45
+29        android:label="@string/app_name"
+29-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:15:9-41
+30        android:roundIcon="@drawable/ic_launcher_round"
+30-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:16:9-56
+31        android:supportsRtl="true"
+31-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:17:9-35
+32        android:theme="@style/Theme.WhatsAppSummarizer" >
+32-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:18:9-56
+33
+34        <!-- Main Activity -->
+35        <activity
+35-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:21:9-28:20
+36            android:name="com.whatsapp.summarizer.MainActivity"
+36-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:22:13-41
+37            android:exported="true" >
+37-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:23:13-36
+38            <intent-filter>
+38-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:24:13-27:29
+39                <action android:name="android.intent.action.MAIN" />
+39-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:25:17-69
+39-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:25:25-66
+40
+41                <category android:name="android.intent.category.LAUNCHER" />
+41-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:26:17-77
+41-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:26:27-74
+42            </intent-filter>
+43        </activity>
+44
+45        <!-- Notification Listener Service -->
+46        <service
+46-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:31:9-40:19
+47            android:name="com.whatsapp.summarizer.WhatsAppNotificationListener"
+47-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:32:13-57
+48            android:enabled="true"
+48-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:33:13-35
+49            android:exported="true"
+49-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:34:13-36
+50            android:label="@string/whatsapp_listener_title"
+50-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:35:13-60
+51            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE" >
+51-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:36:13-87
+52            <intent-filter>
+52-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:37:13-39:29
+53                <action android:name="android.service.notification.NotificationListenerService" />
+53-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:38:17-99
+53-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:38:25-96
+54            </intent-filter>
+55        </service>
+56
+57        <!-- Floating Window Service -->
+58        <service
+58-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:43:9-46:40
+59            android:name="com.whatsapp.summarizer.FloatingWindowService"
+59-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:44:13-50
+60            android:enabled="true"
+60-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:45:13-35
+61            android:exported="false" />
+61-->/Users/jimhuff/github/whatsapp-plugin/android-app/app/src/main/AndroidManifest.xml:46:13-37
+62
+63        <provider
+63-->[androidx.emoji2:emoji2:1.2.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/0a9e5c201e101a05fce9e24863b1e96a/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
+64            android:name="androidx.startup.InitializationProvider"
+64-->[androidx.emoji2:emoji2:1.2.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/0a9e5c201e101a05fce9e24863b1e96a/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:25:13-67
+65            android:authorities="com.whatsapp.summarizer.androidx-startup"
+65-->[androidx.emoji2:emoji2:1.2.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/0a9e5c201e101a05fce9e24863b1e96a/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:26:13-68
+66            android:exported="false" >
+66-->[androidx.emoji2:emoji2:1.2.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/0a9e5c201e101a05fce9e24863b1e96a/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:27:13-37
+67            <meta-data
+67-->[androidx.emoji2:emoji2:1.2.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/0a9e5c201e101a05fce9e24863b1e96a/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+68                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+68-->[androidx.emoji2:emoji2:1.2.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/0a9e5c201e101a05fce9e24863b1e96a/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:30:17-75
+69                android:value="androidx.startup" />
+69-->[androidx.emoji2:emoji2:1.2.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/0a9e5c201e101a05fce9e24863b1e96a/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:31:17-49
+70            <meta-data
+70-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/945c56560be38e766c66e52f27014e86/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:29:13-31:52
+71                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+71-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/945c56560be38e766c66e52f27014e86/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:30:17-78
+72                android:value="androidx.startup" />
+72-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/945c56560be38e766c66e52f27014e86/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:31:17-49
+73            <meta-data
+73-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/6c92231183a039d7acadd4b8234396e8/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
+74                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+74-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/6c92231183a039d7acadd4b8234396e8/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
+75                android:value="androidx.startup" />
+75-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/6c92231183a039d7acadd4b8234396e8/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
+76        </provider>
+77
+78        <receiver
+78-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/6c92231183a039d7acadd4b8234396e8/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
+79            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+79-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/6c92231183a039d7acadd4b8234396e8/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
+80            android:directBootAware="false"
+80-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/6c92231183a039d7acadd4b8234396e8/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
+81            android:enabled="true"
+81-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/6c92231183a039d7acadd4b8234396e8/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
+82            android:exported="true"
+82-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/6c92231183a039d7acadd4b8234396e8/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
+83            android:permission="android.permission.DUMP" >
+83-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/6c92231183a039d7acadd4b8234396e8/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
+84            <intent-filter>
+84-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/6c92231183a039d7acadd4b8234396e8/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
+85                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+85-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/6c92231183a039d7acadd4b8234396e8/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
+85-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/6c92231183a039d7acadd4b8234396e8/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
+86            </intent-filter>
+87            <intent-filter>
+87-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/6c92231183a039d7acadd4b8234396e8/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
+88                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+88-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/6c92231183a039d7acadd4b8234396e8/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
+88-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/6c92231183a039d7acadd4b8234396e8/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
+89            </intent-filter>
+90            <intent-filter>
+90-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/6c92231183a039d7acadd4b8234396e8/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
+91                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+91-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/6c92231183a039d7acadd4b8234396e8/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
+91-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/6c92231183a039d7acadd4b8234396e8/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
+92            </intent-filter>
+93            <intent-filter>
+93-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/6c92231183a039d7acadd4b8234396e8/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
+94                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+94-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/6c92231183a039d7acadd4b8234396e8/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
+94-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/jimhuff/.gradle/caches/9.2.0/transforms/6c92231183a039d7acadd4b8234396e8/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
+95            </intent-filter>
+96        </receiver>
+97    </application>
+98
+99</manifest>

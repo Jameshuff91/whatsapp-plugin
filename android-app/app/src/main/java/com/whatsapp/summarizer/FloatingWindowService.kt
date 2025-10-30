@@ -24,6 +24,7 @@ class FloatingWindowService : Service() {
     private lateinit var messageQueue: MessageQueue
     private lateinit var geminiService: GeminiService
     private val scope = CoroutineScope(Dispatchers.Main)
+    private lateinit var params: WindowManager.LayoutParams
 
     override fun onCreate() {
         super.onCreate()
@@ -43,7 +44,7 @@ class FloatingWindowService : Service() {
         val inflater = LayoutInflater.from(this)
         floatingView = inflater.inflate(R.layout.floating_window, null)
 
-        val params = WindowManager.LayoutParams().apply {
+        params = WindowManager.LayoutParams().apply {
             type = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
             } else {

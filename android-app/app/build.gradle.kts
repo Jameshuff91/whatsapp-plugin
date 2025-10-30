@@ -51,8 +51,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
 
-    // Google Generative AI (Gemini)
-    implementation("com.google.ai.client.generativeai:google-generativeai:0.5.0")
+    // HTTP Client for Gemini API calls
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
 
     // Lifecycle
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")

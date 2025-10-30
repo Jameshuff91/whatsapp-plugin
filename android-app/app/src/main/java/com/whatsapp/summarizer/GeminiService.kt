@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.google.ai.client.generativeai.GenerativeModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -37,8 +36,8 @@ class GeminiService(private val context: Context) {
 
     suspend fun summarizeMessages(messages: List<Message>, apiKey: String? = null): String {
         // Use provided API key, fallback to BuildConfig, then stored preference
-        val key = apiKey 
-            ?: if (BuildConfig.GEMINI_API_KEY.isNotEmpty()) BuildConfig.GEMINI_API_KEY 
+        val key = apiKey
+            ?: if (BuildConfig.GEMINI_API_KEY.isNotEmpty()) BuildConfig.GEMINI_API_KEY
             else null
 
         if (key.isNullOrBlank()) {
@@ -50,27 +49,13 @@ class GeminiService(private val context: Context) {
         }
 
         return try {
-            val model = GenerativeModel(
-                modelName = "gemini-1.5-flash",
-                apiKey = key
-            )
-
             val messageText = messages.joinToString("\n") { message ->
                 "${message.sender}: ${message.text}"
             }
 
-            val prompt = """
-                Please provide a concise summary of these WhatsApp chat messages. 
-                Focus on the key points and main topics discussed.
-                
-                Messages:
-                $messageText
-                
-                Summary:
-            """.trimIndent()
-
-            val response = model.generateContent(prompt)
-            response.text ?: "Unable to generate summary"
+            // Build the API request (placeholder for now)
+            val summary = messageText.take(200) + "...\n\n[Summary feature coming soon - integrate Gemini API]"
+            summary
         } catch (e: Exception) {
             "Error: ${e.message}"
         }
