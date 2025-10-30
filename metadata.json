@@ -1,0 +1,5 @@
+{
+  "name": "WhatsApp Chat Summarizer",
+  "description": "A plugin concept for WhatsApp that uses Gemini to summarize recent messages in a group chat, helping you quickly catch up on important conversations.",
+  "requestFramePermissions": []
+}
