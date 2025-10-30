@@ -15,6 +15,7 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,7 +37,12 @@ class FloatingWindowService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (floatingView == null) {
-            createFloatingWindow()
+            // Only create the floating window if we have the permission
+            if (hasWindowPermission()) {
+                createFloatingWindow()
+            } else {
+                Log.w("FloatingWindowService", "SYSTEM_ALERT_WINDOW permission not granted yet")
+            }
         }
         return START_STICKY
     }
@@ -199,6 +205,17 @@ class FloatingWindowService : Service() {
                 }
             }
             messagesText.text = text
+        }
+    }
+
+    private fun hasWindowPermission(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.SYSTEM_ALERT_WINDOW
+            ) == android.content.pm.PackageManager.PERMISSION_GRANTED
+        } else {
+            true // Permission not needed on older Android versions
         }
     }
 
