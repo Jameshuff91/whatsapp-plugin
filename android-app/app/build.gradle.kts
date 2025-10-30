@@ -13,6 +13,10 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+
+        // Inject Gemini API key from environment variable
+        val geminiApiKey = System.getenv("GEMINI_API_KEY") ?: ""
+        buildConfigField("String", "GEMINI_API_KEY", "\"$geminiApiKey\"")
     }
 
     buildTypes {
@@ -32,6 +36,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 

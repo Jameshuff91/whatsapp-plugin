@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.Switch
 import android.widget.TextView
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var messageQueue: MessageQueue
     private lateinit var geminiService: GeminiService
     private lateinit var apiKeyInput: EditText
+    private lateinit var apiKeySection: LinearLayout
     private lateinit var messagesView: TextView
     private lateinit var summaryView: TextView
     private lateinit var loadingProgress: ProgressBar
@@ -40,13 +42,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun initializeViews() {
         apiKeyInput = findViewById(R.id.apiKeyInput)
+        apiKeySection = findViewById(R.id.apiKeySection)
         messagesView = findViewById(R.id.messagesView)
         summaryView = findViewById(R.id.summaryView)
         loadingProgress = findViewById(R.id.loadingProgress)
         listenerStatus = findViewById(R.id.listenerStatus)
         overlayToggle = findViewById(R.id.overlayToggle)
 
-        // Load saved API key
+        // Hide API key section if key is already provided at build time
+        if (BuildConfig.GEMINI_API_KEY.isNotEmpty()) {
+            apiKeySection.visibility = View.GONE
+        }
+
+        // Load saved API key preference (for override)
         lifecycleScope.launch {
             geminiService.getApiKeyFlow().collect { apiKey ->
                 apiKeyInput.setText(apiKey ?: "")
@@ -142,9 +150,9 @@ class MainActivity : AppCompatActivity() {
                 return@launch
             }
 
-            val apiKey = apiKeyInput.text.toString()
+            val apiKey = geminiService.getApiKey() ?: apiKeyInput.text.toString()
             if (apiKey.isEmpty()) {
-                summaryView.text = getString(R.string.error_no_key)
+                summaryView.text = "API key not found. Set GEMINI_API_KEY at build time or enter it manually."
                 return@launch
             }
 

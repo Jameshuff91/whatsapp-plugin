@@ -15,27 +15,42 @@
         android:textColor="@color/whatsapp_green"
         android:layout_marginBottom="16dp" />
 
-    <!-- API Key Section -->
+    <!-- API Key Section (Hidden if injected at build time) -->
     <LinearLayout
+        android:id="@+id/apiKeySection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_marginBottom="16dp">
 
-        <EditText
-            android:id="@+id/apiKeyInput"
-            android:layout_width="0dp"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="@string/api_key_hint"
-            android:inputType="textPassword"
-            android:layout_marginEnd="8dp" />
+            android:text="API Key (Optional - set GEMINI_API_KEY at build time)"
+            android:textSize="12sp"
+            android:textStyle="italic"
+            android:layout_marginBottom="8dp" />
 
-        <Button
-            android:id="@+id/saveApiKeyButton"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/save_button" />
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/apiKeyInput"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Enter API key to override"
+                android:inputType="textPassword"
+                android:layout_marginEnd="8dp" />
+
+            <Button
+                android:id="@+id/saveApiKeyButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save" />
+        </LinearLayout>
     </LinearLayout>
 
     <!-- Listener Status -->

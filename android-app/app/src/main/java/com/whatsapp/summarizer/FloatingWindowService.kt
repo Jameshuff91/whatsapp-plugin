@@ -95,9 +95,9 @@ class FloatingWindowService : Service() {
                     return@launch
                 }
 
-                val apiKey = getApiKey()
+                val apiKey = geminiService.getApiKey()
                 if (apiKey.isEmpty()) {
-                    summaryText.text = "Please set API key in main app"
+                    summaryText.text = "API key not configured. Set GEMINI_API_KEY at build time."
                     return@launch
                 }
 
@@ -183,11 +183,6 @@ class FloatingWindowService : Service() {
             }
             messagesText.text = text
         }
-    }
-
-    private fun getApiKey(): String {
-        val prefs = getSharedPreferences("api", Context.MODE_PRIVATE)
-        return prefs.getString("gemini_api_key", "") ?: ""
     }
 
     override fun onDestroy() {
