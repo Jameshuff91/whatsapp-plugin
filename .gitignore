@@ -22,3 +22,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Gradle build files
+android-app/.gradle/
+android-app/build/
+android-app/*.jks
+android-app/*.keystore
+
+# Gradle wrapper (optional - some projects commit this)
+# android-app/gradle/wrapper/gradle-wrapper.jar
